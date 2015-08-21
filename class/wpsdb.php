@@ -752,6 +752,10 @@ class WPSDB extends WPSDB_Base {
 			if ( isset( $data['sig'] ) ) {
 				unset( $data['sig'] );
 			}
+			// fix stupid polylang possible injection in our array data, which breaks the vreification on the remote side
+			if ( isset( $data['pll_ajax_backend'] ) ) {
+				unset( $data['pll_ajax_backend'] );
+			}
 			$ajax_url = trailingslashit( $data['url'] ) . 'wp-admin/admin-ajax.php';
 			$data['primary_keys'] = stripslashes( $data['primary_keys'] );
 			$data['sig'] = $this->create_signature( $data, $data['key'] );
